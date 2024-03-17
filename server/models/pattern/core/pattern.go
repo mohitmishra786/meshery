@@ -1,12 +1,10 @@
 package core
 
 import (
-	"bytes"
 	"crypto/rand"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"math/big"
 	"strings"
 
@@ -467,8 +465,14 @@ func processCytoElementsWithPattern(eles []cytoscapejs.Element, callback func(sv
 	return nil
 }
 
-func manifestIsEmpty[K any](manifest map[string]K) bool {
-	return len(manifest) == 0
+func manifestIsEmpty(manifests []string) bool {
+	for _, m := range manifests {
+		x := strings.TrimSpace(strings.Trim(m, "\n"))
+		if x != "---" && x != "" {
+			return false
+		}
+	}
+	return true
 }
 
 // Note: If modified, make sure this function always returns a meshkit error
@@ -478,23 +482,22 @@ func NewPatternFileFromK8sManifest(data string, ignoreErrors bool, reg *meshmode
 		Services: map[string]*Service{},
 	}
 
-	buffer := bytes.NewBufferString(data)
-	decoder := yaml.NewDecoder(buffer)
-	for {
+	manifests := strings.Split(data, "\n---\n")
+	//For `---` separated manifests, even if only one manifest is there followed/preceded by multiple `\n---\n`- the manifest be will be valid
+	//If there is no data present (except \n---\n) , then the yaml will be marked as empty and error will be thrown
+	if manifestIsEmpty(manifests) {
+		return pattern, ErrParseK8sManifest(fmt.Errorf("kubernetes manifest is empty"))
+	}
+	for _, manifestYAML := range manifests {
 		manifest := map[string]interface{}{}
 
-		err := decoder.Decode(manifest)
-		if err != nil {
-			if err == io.EOF {
-				if manifestIsEmpty(pattern.Services) {
-					return pattern, ErrParseK8sManifest(fmt.Errorf("kubernetes manifest is empty"))
-				}
-				return pattern, nil
-			} else {
-				return pattern, ErrParseK8sManifest(fmt.Errorf("kubernetes manifest is empty"))
+		if err := yaml.Unmarshal([]byte(manifestYAML), &manifest); err != nil {
+			if ignoreErrors {
+				continue
 			}
+			return pattern, ErrParseK8sManifest(err)
 		}
-		if manifestIsEmpty(manifest) {
+		if len(manifest) == 0 {
 			continue
 		}
 		// Recursive casting
@@ -517,6 +520,7 @@ func NewPatternFileFromK8sManifest(data string, ignoreErrors bool, reg *meshmode
 		pattern.Services[name] = &svc
 	}
 
+	return pattern, nil
 }
 
 func createPatternServiceFromK8s(manifest map[string]interface{}, regManager *meshmodel.RegistryManager) (string, Service, error) {

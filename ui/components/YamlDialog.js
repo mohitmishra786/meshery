@@ -5,7 +5,7 @@ import {
   Divider,
   IconButton,
   Tooltip,
-} from '@layer5/sistent';
+} from '@layer5/sistent-components';
 import useStyles from './MesheryPatterns/Cards.styles';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import FullscreenExit from '@material-ui/icons/FullscreenExit';

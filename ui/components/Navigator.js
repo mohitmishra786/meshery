@@ -75,7 +75,7 @@ import { iconSmall } from '../css/icons.styles';
 import CAN from '@/utils/can';
 import { keys } from '@/utils/permission_constants';
 import { CustomTextTooltip } from './MesheryMeshInterface/PatternService/CustomTextTooltip';
-import { CHARCOAL } from '@layer5/sistent';
+import { CHARCOAL } from '@layer5/sistent-components';
 
 const styles = (theme) => ({
   root: {

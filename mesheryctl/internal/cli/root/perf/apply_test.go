@@ -16,6 +16,8 @@ var newProfileID = "906f8876-33b5-4a97-906e-7a409d3b8ae9"
 var (
 	// server returning existing profile "new"
 	apply1001 = "1001.golden"
+	// server running test with existing profile
+	apply1002 = "1002.golden"
 	// server response for no protocol added to url
 	apply1003 = "1003.golden"
 	// server response for creating new profile "test"
@@ -25,6 +27,8 @@ var (
 )
 
 var (
+	// mesheryctl response for success fully ran test
+	apply1001output = "1001.golden"
 	// mesheryctl response for url not having protocol added
 	apply1002output = "1002.golden"
 	// mesheryctl response for invalid url
@@ -57,17 +61,17 @@ func TestApplyCmd(t *testing.T) {
 		{"Run Test with Existing profile", []string{"apply", "new"},
 			[]utils.MockURL{
 				{Method: "GET", URL: profileURL, Response: apply1001, ResponseCode: 200},
-				{Method: "GET", URL: existingProfileRunTest, Response: apply1001, ResponseCode: 400},
+				{Method: "GET", URL: existingProfileRunTest, Response: apply1002, ResponseCode: 200},
 			},
-			apply1002output,
+			apply1001output,
 			testToken, false,
 		},
 		{"Run Test with Existing profile with --url", []string{"apply", "new", "--url", "https://www.google.com"},
 			[]utils.MockURL{
 				{Method: "GET", URL: profileURL, Response: apply1001, ResponseCode: 200},
-				{Method: "GET", URL: existingProfileRunTest, Response: apply1001, ResponseCode: 400},
+				{Method: "GET", URL: existingProfileRunTest, Response: apply1002, ResponseCode: 200},
 			},
-			apply1002output,
+			apply1001output,
 			testToken, false,
 		},
 		{"Run Test with Existing profile with --url without protocol", []string{"apply", "new", "--url", "www.google.com"},

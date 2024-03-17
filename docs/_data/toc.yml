@@ -143,11 +143,6 @@
           url: guides/troubleshooting/meshery-operator-meshsync
         - title: Meshery Server 
           url: guides/troubleshooting/meshery-server
-    - title: Tutorials ↆ
-      url: guides/tutorials
-      children:
-      - title: Exploring Kubernetes Pods
-        url: guides/tutorials/kubernetes-pods
     - title: Upgrading Meshery ↆ
       url: guides/upgrade
       children:
@@ -169,7 +164,7 @@
       url: tasks/pattern-management
     - title: Performance Management
       url: tasks/performance/managing-performance
-- title: 🛠 Integrations & Extensions
+- title: 🛠 Integrations and Extensions
   url: extensibility
   links:
     - title: "APIs"

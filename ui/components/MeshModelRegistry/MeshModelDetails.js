@@ -235,14 +235,7 @@ const ComponentContents = withSuppressedErrorBoundary(({ component }) => {
   );
 });
 
-const RelationshipContents = withSuppressedErrorBoundary(({ relationship, view }) => {
-  let metadata = {};
-  if (view !== RELATIONSHIPS) {
-    metadata = JSON.parse(atob(relationship.metadata));
-  } else {
-    metadata = relationship.metadata;
-  }
-
+const RelationshipContents = withSuppressedErrorBoundary(({ relationship }) => {
   const PropertyFormattersLeft = {
     version: (value) => <KeyValue property="API Version" value={value} />,
     modelName: (value) => <KeyValue property="Model Name" value={value} />,
@@ -274,7 +267,7 @@ const RelationshipContents = withSuppressedErrorBoundary(({ relationship, view }
     <div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Title title={relationship.subType} />
-        <Description description={metadata.description} />
+        <Description description={relationship.metadata.description} />
       </div>
       <RenderContents
         metaDataLeft={metaDataLeft}
@@ -450,7 +443,7 @@ const MeshModelDetails = ({ view, showDetailsData }) => {
       case MODELS:
         return <ModelContents model={showDetailsData.data} />;
       case RELATIONSHIPS:
-        return <RelationshipContents relationship={showDetailsData.data} view={view} />;
+        return <RelationshipContents relationship={showDetailsData.data} />;
       case COMPONENTS:
         return <ComponentContents component={showDetailsData.data} />;
       case REGISTRANTS:

@@ -12,7 +12,6 @@
    "isAnnotation": false,
    "isNamespaced": true,
    "primaryColor": "#1988d9",
-   "published": true,
    "secondaryColor": "#54aef0",
    "shape": "rectangle",
    "shapePolygonPoints": "",
@@ -31,7 +30,7 @@
    "status": "",
    "hostID": "00000000-0000-0000-0000-000000000000",
    "category": {
-    "name": "Provisioning",
+    "name": "",
     "metadata": null
    },
    "metadata": {

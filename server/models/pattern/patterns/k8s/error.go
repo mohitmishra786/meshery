@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	ErrDryRunCode = "meshery-server-1318"
+	ErrDryRunCode = "1536"
 )
 
 func isErrKubeStatusErr(err error) bool {

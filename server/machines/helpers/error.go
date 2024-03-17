@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ErrAutoRegisterCode = "meshery-server-1219"
+	ErrAutoRegisterCode = "1556"
 )
 
 func ErrAutoRegister(err error, connType string) error {

@@ -178,9 +178,9 @@ mesheryctl perf apply meshery-profile-new --url "https://google.com" --load-gene
 
 		// Run test based on flags
 		if testName == "" {
-			log.Debug("Test Name not provided")
+			utils.Log.Debug("Test Name not provided")
 			testName = utils.StringWithCharset(8)
-			log.Debug("Using random test name: ", testName)
+			utils.Log.Debug("Using random test name: ", testName)
 		}
 
 		// Throw error if a profile name is not provided
@@ -203,7 +203,7 @@ mesheryctl perf apply meshery-profile-new --url "https://google.com" --load-gene
 		profileName = strings.Join(args, "%20")
 
 		// Check if the profile name is valid, if not prompt the user to create a new one
-		log.Debug("Fetching performance profile")
+		utils.Log.Debug("Fetching performance profile")
 		profiles, _, err := fetchPerformanceProfiles(mctlCfg.GetBaseMesheryURL(), profileName, pageSize, pageNumber-1)
 		if err != nil {
 			utils.Log.Error(err)
@@ -322,7 +322,7 @@ mesheryctl perf apply meshery-profile-new --url "https://google.com" --load-gene
 		}
 		req.URL.RawQuery = q.Encode()
 
-		log.Info("Initiating Performance test ...")
+		utils.Log.Info("Initiating Performance test ...")
 
 		resp, err := utils.MakeRequest(req)
 
@@ -336,9 +336,9 @@ mesheryctl perf apply meshery-profile-new --url "https://google.com" --load-gene
 		if err != nil {
 			return errors.Wrap(err, utils.PerfError("failed to read response body"))
 		}
-		log.Debug(string(data))
+		utils.Log.Debug(string(data))
 
-		log.Info("Test Completed Successfully!")
+		utils.Log.Info("Test Completed Successfully!")
 		return nil
 	},
 }
@@ -359,7 +359,7 @@ func init() {
 }
 
 func createPerformanceProfile(mctlCfg *config.MesheryCtlConfig) (string, string, error) {
-	log.Debug("Creating new performance profile inside function")
+	utils.Log.Debug("Creating new performance profile inside function")
 
 	if profileName == "" {
 		return "", "", ErrNoProfileName()
@@ -398,7 +398,7 @@ func createPerformanceProfile(mctlCfg *config.MesheryCtlConfig) (string, string,
 	if loadTestBody != "" {
 		// Check if the loadTestBody is a filepath or a string
 		if _, err := os.Stat(loadTestBody); err == nil {
-			log.Info("Reading test body from file")
+			utils.Log.Info("Reading test body from file")
 			bodyFile, err := os.ReadFile(loadTestBody)
 			if err != nil {
 				return "", "", ErrReadFilepath(err)
@@ -498,6 +498,6 @@ func createPerformanceProfile(mctlCfg *config.MesheryCtlConfig) (string, string,
 	profileID = response.ID.String()
 	profileName = response.Name
 
-	log.Debug("New profile created")
+	utils.Log.Debug("New profile created")
 	return profileID, profileName, nil
 }

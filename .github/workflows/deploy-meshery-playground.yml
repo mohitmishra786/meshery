@@ -1,0 +1,60 @@
+name: Deploy Meshery Playground
+on:
+  workflow_call:
+  workflow_dispatch:
+    # inputs:
+    # release-ver:
+    #   description: "Stable Release Version"
+    #   required: true
+    #   default: "v"
+    # stripped-release-ver:
+    #   description: "Stripped Stable Release Version"
+    #   required: true
+    #   default: ""
+#       release-channel:
+#         description: "Release Channel"
+#         required: true
+#         default: "playground"
+
+# env:
+#   GIT_VERSION: ${{github.event.inputs.release-ver}}
+#   GIT_STRIPPED_VERSION: ${{github.event.inputs.stripped-release-ver}}
+#   RELEASE_CHANNEL: ${{github.event.inputs.release-channel}}
+#   GIT_TAG: ${{ github.event.release.tag_name }}
+
+jobs:
+  deploy-playground:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - uses: azure/setup-kubectl@v3
+        # with:
+        # version: '<version>' # default is latest stable
+        id: install-kubectl
+      - uses: Azure/k8s-set-context@v2
+        with:
+          kubeconfig: ${{ secrets.AKS_PLAYGROUND_KUBECONFIG }}
+      # - name: SSH and deploy playground
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.AZ_PLAYGROUND_HOST }}
+      #     username: ${{ secrets.AZ_PLAYGROUND_USERNAME }}
+      #     key: ${{ secrets.AZ_PLAYGROUND_KEY }}
+      #     port: 22
+      #     script: |
+      #       sudo docker pull layer5/meshery:playground-latest
+      #       sudo make play-prod-run
+      - uses: Azure/k8s-deploy@v4
+        with:
+          resource-group: Meshery
+          name: playground
+          action: deploy
+          strategy: basic
+
+          # private-cluster: true
+          manifests: |
+            install/playground/meshery-playground-deployment.yaml
+          images: |
+            hub.docker.com/r/layer5/meshery:playground-latest
+

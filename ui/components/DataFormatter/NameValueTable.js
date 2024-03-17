@@ -53,9 +53,7 @@ const useStyles = makeStyles((theme) => ({
   table: {
     border: '1px solid #e7e7e7',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.secondary.elevatedComponents2,
-    padding: '0.375rem',
-    width: '98%',
+    backgroundColor: theme.palette.secondary.mainBackground,
   },
   highlightRow: {
     color: theme.palette.tables.head.color,

@@ -56,7 +56,7 @@ const StyledTreeItem = React.forwardRef(function StyledTreeItem(props, ref) {
               size="small"
               checked={checked}
               style={{
-                visibility: hover || checked ? 'hidden' : 'hidden', //TODO: make it visible when bulk status change is supported
+                visibility: hover || checked ? 'visible' : 'hidden',
                 color: Colors.keppelGreen,
                 padding: '0',
                 '&.Mui-checked': {

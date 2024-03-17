@@ -38,7 +38,7 @@ var (
 var AppCmd = &cobra.Command{
 	Use:   "app",
 	Short: "Cloud Native Apps Management",
-	Long: `"app" command is being deprecated and moved to "design" command. All apps operations: import, list, view, onboard and offboard.
+	Long: `All apps operations: import, list, view, onboard and offboard.
 Find more information at: https://docs.meshery.io/reference/mesheryctl#command-reference`,
 	Example: `
 // Base command:

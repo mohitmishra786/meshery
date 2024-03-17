@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 	"testing"
 )
 
@@ -40,9 +39,7 @@ func TestGetLocation(t *testing.T) {
 		token.SetLocation(test)
 		got := token.GetLocation()
 		want, err := os.UserHomeDir()
-		MesheryFolder := ".meshery"
-		path := filepath.Join(want, MesheryFolder, test)
-		want = path
+		want = want + "/.meshery/" + test
 		if err != nil {
 			t.Errorf("Fail")
 		}

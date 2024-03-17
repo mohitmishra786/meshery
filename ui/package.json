@@ -108,7 +108,7 @@
         "react-runtime": "^1.1.0",
         "react-select": "^5.7.0",
         "react-share": "^4.4.1",
-        "react-slick": "^0.29.0",
+        "react-slick": "^0.30.2",
         "redux": "^4.2.0",
         "redux-thunk": "^2.4.0",
         "relay-runtime": "^15.0.0",

@@ -10,7 +10,11 @@
    "defaultData": "",
    "genealogy": "",
    "isAnnotation": false,
+   "isModelAnnotation": "FALSE",
    "isNamespaced": true,
+   "logoURL": "",
+   "model": "cno",
+   "modelDisplayName": "CNO",
    "primaryColor": "#00B39F",
    "published": false,
    "secondaryColor": "#00D3A9",
@@ -35,12 +39,7 @@
     "metadata": null
    },
    "metadata": {
-    "isAnnotation": false,
-    "published": false,
-    "subCategory": "Uncategorized",
-    "svgColor": "",
-    "svgComplete": "",
-    "svgWhite": ""
+    "source_uri": "https://beopencloud.github.io/cno/cno-v1.1.0.tgz"
    },
    "components": null,
    "relationships": null

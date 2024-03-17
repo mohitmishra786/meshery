@@ -405,7 +405,7 @@ func chooseDirectProvider(provs map[string]Provider, option string) (Provider, e
 }
 
 func createProviderURI(provider Provider, host string, port int) (string, error) {
-	uri, err := url.Parse(provider.ProviderURL + "/login")
+	uri, err := url.Parse(provider.ProviderURL)
 	if err != nil {
 		return "", err
 	}
@@ -417,6 +417,7 @@ func createProviderURI(provider Provider, host string, port int) (string, error)
 	q.Add("provider_version", "v0.3.14")
 
 	uri.RawQuery = q.Encode()
+
 	return uri.String(), nil
 }
 
@@ -449,7 +450,7 @@ func getTokenObjFromMesheryServer(mctl *config.MesheryCtlConfig, provider, token
 }
 
 func IsServerRunning(serverAddr string) error {
-	serverAddr = strings.TrimPrefix(serverAddr, "http://")
+	serverAddr, _ = strings.CutPrefix(serverAddr, "http://")
 	// Attempt to establish a connection to the server
 	conn, err := net.DialTimeout("tcp", serverAddr, 2*time.Second)
 	if err != nil {
